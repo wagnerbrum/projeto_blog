@@ -1,12 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const criptografia = require('../libs/criptografia/cripto_dupla');
+const data_class = require('../libs/data/data')
 
 router.get('/', function (req, res, next) {
     req.connection.query('SELECT * FROM usuarios', (err, usuarios) => {
         if(err) return next(err);
         res.json(usuarios);
     });
+});
+
+router.get('/date/', function (req, res, next) {
+    let data = new Date();
+    res.json({
+        "dia" : data.getDate(),
+        "mes" : data.getMonth()+1,
+        "ano" : data.getFullYear(),
+        "hora" : data.getHours(),
+        "minutos": data.getMinutes(),
+        "segundos": data.getSeconds()
+    });
+});
+
+router.get('/date2/', function (req, res, next) {
+    res.json({
+        "Data Atual": data_class.data_atual()
+    })
 });
 
 /* Criptografia usando apenas AES256 */

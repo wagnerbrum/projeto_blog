@@ -1,6 +1,8 @@
 'use strict';
 
 const usuarios_model = require('./usuarios_model');
+const criptografia = require('../libs/criptografia/cripto_dupla');
+const class_data = require('../libs/data/data');
 
 // exports.getAll = (req, res) => {
 //     try{
@@ -36,7 +38,19 @@ exports.getById = (req, res) => {
     });
 }
 
+exports.getByLogin = (req, res) => {
+    usuarios_model.getByLogin(req, res, req.body.login, (err, data) => {
+        if(err){
+            res.json(err);
+        }else{
+            res.json(data);
+        }
+    });
+}
+
 exports.add = (req, res) => {
+    req.body.senha = criptografia.criptografar(req.body.senha);
+    req.body.criado_em = class_data.data_atual();
     usuarios_model.add(req, res, req.body, (err, data) => {
         if(err){
             res.json(err);

@@ -4,6 +4,7 @@ const express = require('express')
 
 router.get('/', usuarios_controller.getAll);
 router.get('/:id', usuarios_controller.getById);
+router.post('/login/', usuarios_controller.getByLogin);
 router.post('/', usuarios_controller.add);
 router.put('/:id', usuarios_controller.update);
 router.delete('/:id', usuarios_controller.delete);
